@@ -1,0 +1,67 @@
+Chicago Crimes Dataset (Crimes_-_2001_to_Present_20251124.csv)
+===============================================================
+
+Source: CPD open-data export pulled 2025-11-24 (local copy located alongside this repo).
+
+Structure
+---------
+- Rows: 106,143 (after dropping records missing Date/Lat/Lon there are 106,120 usable rows)
+- Columns (22):
+  ID, Case Number, Date, Block, IUCR, Primary Type, Description, Location Description,
+  Arrest (bool), Domestic (bool), Beat, District, Ward, Community Area, FBI Code,
+  X Coordinate, Y Coordinate, Year, Updated On, Latitude, Longitude, Location (lat/lon string)
+- Date parsed format: `%m/%d/%Y %I:%M:%S %p`
+- Spatial coverage: Latitude 41.6446–42.0225, Longitude -87.9311–-87.5245 (Chicago limits)
+
+Temporal Coverage
+-----------------
+- Earliest record: 2025-01-01 00:00
+- Latest record:   2025-11-16 23:00
+- Monthly counts (Jan–Nov 2025):
+  Jan 9,243 | Feb 8,222 | Mar 9,615 | Apr 9,738 | May 10,380 | Jun 10,815
+  Jul 11,731 | Aug 10,921 | Sep 10,173 | Oct 10,668 | Nov 4,637 (through 11/16)
+- Day-of-week totals: Fri 16,096 | Sat 15,384 | Thu 15,302 | Wed 15,054 | Mon 15,038 | Tue 14,898 | Sun 14,371
+
+Primary Type Distribution (top 7)
+---------------------------------
+- THEFT: 48,536
+- ASSAULT: 19,203
+- MOTOR VEHICLE THEFT: 15,034
+- BURGLARY: 8,441
+- ROBBERY: 5,245
+- WEAPONS VIOLATION: 5,010
+- CRIMINAL TRESPASS: 4,674
+
+Arrest & Domestic Rates
+-----------------------
+- Overall arrest rate: 12.44%
+- Overall domestic flag rate: 8.58%
+- Arrest rate by top types:
+  WEAPONS VIOLATION 77.7% | CRIMINAL TRESPASS 31.2% | ASSAULT 12.2% | THEFT 8.7%
+  ROBBERY 8.4% | BURGLARY 4.4% | MOTOR VEHICLE THEFT 3.2%
+- Domestic share (top types):
+  ASSAULT 28.2% | CRIMINAL TRESPASS 7.4% | THEFT 5.2% | ROBBERY 3.5% | BURGLARY 3.2%
+  MOTOR VEHICLE THEFT 2.1% | WEAPONS VIOLATION 1.2%
+
+Spatial Hotspots (selected)
+---------------------------
+- District counts (top): 12 (7,631), 18 (7,105), 1 (6,962), 19 (6,696)
+- Community areas (top): 8 (5,879), 28 (5,329), 25 (4,607), 32 (4,505)
+- Beat arrest extremes (>=200 incidents): highs in 1913/2531 (>35% arrests), lows in 1213/1215 (~2.7%)
+
+Robbery Network Snapshot (0.5 mi / 3-day edges)
+-----------------------------------------------
+- Nodes: 5,245 | Edges: 3,116 | Avg degree: 1.19 | Density: 0.000227 | Transitivity: 0.602
+- Component sizes (top five): 130, 59, 37, 37, 24
+- Largest component: 130 nodes, 288 edges, centered near 41.885°N / -87.629°W, spanning 2025-07-17 to 2025-10-16
+- Edge time differences: 0-day (915), 1-day (763), 2-day (705), 3-day (733)
+
+Missingness
+-----------
+- Coordinates & Location string missing on ~0.02% of rows; Location Description missing on 0.0028%; other columns complete.
+
+Usage Notes
+-----------
+- Keep the raw CSV outside of public repos if CJIS policies require access controls. Reference via `CRIME_CSV_PATH`.
+- When refreshing data, maintain the same schema and date format; rerun the preprocessing loaders in `app/analysis.py`.
+- Do not email/share this dataset outside approved secure drives. Limit API exposure to sanitized aggregates when possible.
