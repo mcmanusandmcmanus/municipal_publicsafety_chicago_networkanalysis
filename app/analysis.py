@@ -54,7 +54,7 @@ def overall_summary(df: pd.DataFrame) -> Dict:
         "date_max": str(df["Date"].max().date()),
         "arrest_rate": float(df["Arrest"].mean()),
         "domestic_rate": float(df["Domestic"].mean()),
-        "top_primary_types": top_types.to_dict(),
+        "top_primary_types": {str(k): int(v) for k, v in top_types.to_dict().items()},
     }
 
 
@@ -63,9 +63,9 @@ def temporal_profiles(df: pd.DataFrame) -> Dict:
     hourly = df.groupby("Hour").size().sort_index()
     dow = df.groupby("Dow").size().sort_values(ascending=False)
     return {
-        "monthly_tail": monthly.astype(int).to_dict(),
-        "hourly": hourly.astype(int).to_dict(),
-        "dow": dow.astype(int).to_dict(),
+        "monthly_tail": {str(k): int(v) for k, v in monthly.astype(int).to_dict().items()},
+        "hourly": {int(k): int(v) for k, v in hourly.astype(int).to_dict().items()},
+        "dow": {str(k): int(v) for k, v in dow.astype(int).to_dict().items()},
     }
 
 
@@ -177,4 +177,3 @@ def centrality(G: nx.Graph) -> List[Dict]:
         }
         for node in G.nodes
     ]
-
