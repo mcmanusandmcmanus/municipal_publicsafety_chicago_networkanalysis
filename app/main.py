@@ -176,7 +176,7 @@ def home():
             </div>
             <div class="card">
                 <h3>Top Centrality ({CRIME_TYPE_DEFAULT})</h3>
-                <ul>{bulletize([f\"{n['case_number']} deg {n['degree']} betw {n['betweenness']:.3f} | {n['date']} | {n['block']}\" for n in cent])}</ul>
+                <ul>{bulletize([f"{n['case_number']} deg {n['degree']} betw {n['betweenness']:.3f} | {n['date']} | {n['block']}" for n in cent])}</ul>
             </div>
         </div>
 
